@@ -57,9 +57,9 @@ router.post('/new', (req, res) => {
     });
 });
 //Done
-router.delete('/delete', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   Task.deleteOne({
-      _id: req.body.id
+      _id: req.params.id
     }).exec().then(result => {
       res.status(200).json(result);
     })
