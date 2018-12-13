@@ -1,21 +1,31 @@
 <!-- Head -->
 <div class="text-center">
-  <div class="mb-5 mt-5">
-    <h4 class="text-center">{{ title }}!</h4>
+  <div class="mb-3 mt-5">
+    <h4 class="text-center animated tada">{{ title }}!</h4>
   </div>
   <!-- Form -->
-  <div class="input-group mb-3">
-    <input type="text" name="title" placeholder="Titulo" aria-label="Titulo" class="form-control" #itemTitulo>
-    <input type="text" name="descricao" placeholder="Descrição" aria-label="Descrição" class="form-control"
-      #itemDescricao>
-    <div class="input-group-append">
-      <button class="btn btn-outline-success" type="button" (click)="onAdd(itemTitulo,itemDescricao)"><i class="fa fa-plus-circle"></i></button>
+  <form action="javascript:void(0)">
+    <div class="input-group mb-3">
+      <input type="text" name="title" placeholder="Titulo" aria-label="Titulo" class="form-control" #itemTitulo>
+      <input type="text" name="descricao" placeholder="Descrição" aria-label="Descrição" class="form-control" #itemDescricao>
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="submit" (click)="onAdd(itemTitulo,itemDescricao)"><i class="fa fa-plus-circle"></i></button>
+      </div>
+    </div>
+  </form>
+  <!-- Button filter -->
+  <div class="row mb-3">
+    <div class="col pr-0">
+      <button class="btn btn-block btn-outline-info" type="button" (click)="getTasks(false)">A fazer</button>
+    </div>
+    <div class="col pl-0">
+      <button class="btn btn-block btn-outline-success" type="button" (click)="getTasks(true)">Prontos</button>
     </div>
   </div>
   <!-- List Tasks -->
   <div style="margin:5px 0px" *ngIf="tasks">
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let item of tasks">
+      <li class="list-group-item animated flipInX" *ngFor="let item of tasks">
         <span class="pointer float-left" (click)="alterCheck(item._id,item.done)">
           <i class="far" [ngClass]="item.done? 'fa-check-circle text-success' : 'fa-circle'"></i>
         </span>
@@ -26,5 +36,6 @@
       </li>
     </ul>
   </div>
+  <div *ngIf="tasks<=0" class="alert alert-info" role="alert">Não a tasks nessa lista </div>
 </div>
 <router-outlet></router-outlet>
