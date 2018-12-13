@@ -2,15 +2,15 @@
 
 - Back
   - [NodeJS](https://nodejs.org/)
+  - [MongoDB](https://www.mongodb.com/)
 - Front
   - [AngularJS](https://angular.io/)
 
 Application in NodeJS with:
 
-- [MongoDB](https://www.mongodb.com/)
+- [Mongoosejs](https://mongoosejs.com/)
 - [Express](http://expressjs.com/)
 - [Helmet](https://helmetjs.github.io/)
-- [Consign](https://www.npmjs.com/package/consign)
 - [Body Parser](https://www.npmjs.com/package/body-parser-json)
 
 Dev
@@ -24,6 +24,7 @@ My name is **Gabriel Costa**, from **Brazil**, this is my application that was d
 ### Installation
 
 [Node.js](https://nodejs.org/) v9+ to run.
+[MongoDB](https://www.mongodb.com/) v3+ to run.
 
 Install the dependencies and devDependencies and check and start the server.
 
@@ -34,4 +35,6 @@ $ nodemon -v
 exit 1.x
 $ npm i in the front and back directory
 exit ...
+$ mongo -version
+exit MongoDB shell version v3+
 ```
