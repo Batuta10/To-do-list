@@ -7,41 +7,42 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'To-do-list';
   tasks: any;
+  title = 'To-do-list';
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.getTasks();
+    this.getTasks(false);
   }
 
-  getTasks() {
+  getTasks(status: boolean) {
     this.http.get('http://localhost:3000/task/all')
       .subscribe(x => {
-        this.tasks = x;
-        console.log(x);
+        this.tasks = x.filter(x => x.done === status);
       })
   }
+
   onDelete($id: string) {
     this.http.delete('http://localhost:3000/task/delete/' + $id)
       .subscribe(x => {
-        console.log(x)
-        this.getTasks();
+        this.getTasks(false);
       });
   }
+
   onAdd(x1, y2) {
     var newTask = { titulo: x1.value, descricao: y2.value };
     this.http.post('http://localhost:3000/task/new', newTask).subscribe(x => {
-      console.log(x);
-      this.getTasks();
+      this.getTasks(false);
+      //Clean de input
+      x1.value = null
+      y2.value = null
     })
   }
 
   alterCheck($id: string, isChecked) {
     var upDone = { id: $id, done: !isChecked };
     this.http.patch('http://localhost:3000/task/update', upDone).subscribe(x => {
-      console.log(x);
-      this.getTasks();
+      this.getTasks(false);
     });
   }
 }
