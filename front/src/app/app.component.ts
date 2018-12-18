@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,16 @@ import { HttpClient } from "@angular/common/http";
 export class AppComponent implements OnInit {
   tasks: any;
   title = 'To-do-list';
-  constructor(private http: HttpClient) { }
+  formTask: FormGroup;
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getTasks(false);
+
+    this.formTask = this.formBuilder.group({
+      titulo:[null, [Validators.required, Validators.minLength(3) ]  ],
+      descricao:[null, [Validators.required, Validators.minLength(3)] ]
+    });
   }
 
   getTasks(status: boolean) {
@@ -30,13 +37,11 @@ export class AppComponent implements OnInit {
       });
   }
 
-  onAdd(x1, y2) {
-    var newTask = { titulo: x1.value, descricao: y2.value };
-    this.http.post('http://localhost:3000/task/new', newTask).subscribe(x => {
+  onCreate() {
+    this.http.post('http://localhost:3000/task/new', this.formTask.value).subscribe(x => {
       this.getTasks(false);
-      //Clean de input
-      x1.value = null
-      y2.value = null
+
+      this.formTask.reset();
     })
   }
 

@@ -1,17 +1,38 @@
+
+
 <!-- Head -->
 <div class="text-center">
-  <div class="mb-3 mt-5">
-    <h4 class="text-center animated tada">{{ title }}!</h4>
-  </div>
-  <!-- Form -->
-  <form action="javascript:void(0)">
+    <div class="mb-3 mt-5">
+      <h4 class="text-center animated tada">{{ title }}!</h4>
+    </div>
+    <!-- Form -->
+    <form action="javascript:void(0)" (ngSubmit)="onCreate()" [formGroup]="formTask">
     <div class="input-group mb-3">
-      <input type="text" name="title" placeholder="Titulo" aria-label="Titulo" class="form-control" #itemTitulo>
-      <input type="text" name="descricao" placeholder="Descrição" aria-label="Descrição" class="form-control" #itemDescricao>
+      <input type="text" name="titulo" id="titulo" placeholder="Titulo" aria-label="Titulo" class="form-control"
+        formControlName="titulo" required>
+      <input type="text" name="descricao" placeholder="Descrição" aria-label="Descrição" class="form-control"
+        formControlName="descricao">
       <div class="input-group-append">
-        <button class="btn btn-outline-success" type="submit" (click)="onAdd(itemTitulo,itemDescricao)"><i class="fa fa-plus-circle"></i></button>
+        <button class="btn btn-outline-success" type="submit" [disabled]="formTask.invalid"><i class="fa fa-plus-circle"></i></button>
       </div>
     </div>
+    <div *ngIf="formTask.controls.titulo.invalid && formTask.controls.titulo.touched" class="alert alert-danger">
+      <span *ngIf="formTask.controls.titulo.errors.required">
+        Titulo Obrigatorio.
+      </span>
+      <span *ngIf="formTask.controls.titulo.errors.minlength">
+        Titulo precisa de no mínimo 3 caracteres
+      </span>
+    </div>
+    <div *ngIf="formTask.controls.descricao.invalid && formTask.controls.descricao.touched" class="alert alert-danger">
+        <span *ngIf="formTask.controls.descricao.errors.required">
+            Descrição Obrigatorio.
+        </span>
+        <span *ngIf="formTask.controls.descricao.errors.minlength">
+            Descrição precisa de no mínimo 3 caracteres
+        </span>
+    </div>
+    
   </form>
   <!-- Button filter -->
   <div class="row mb-3">
@@ -27,15 +48,15 @@
     <ul class="list-group">
       <li class="list-group-item animated flipInX" *ngFor="let item of tasks">
         <span class="pointer float-left" (click)="alterCheck(item._id,item.done)">
-          <i class="far" [ngClass]="item.done? 'fa-check-circle text-success' : 'fa-circle'"></i>
+        <i class="far" [ngClass]="item.done? 'fa-check-circle text-success' : 'fa-circle'"></i>
         </span>
         <strong>{{item.titulo}}</strong> - <small>{{item.descricao}}</small>
         <span class="pointer float-right text-danger" (click)="onDelete(item._id)">
-          <i class="fas fa-trash"></i>
+        <i class="fas fa-trash"></i>
         </span>
       </li>
     </ul>
   </div>
   <div *ngIf="tasks<=0" class="alert alert-info" role="alert">Não a tasks nessa lista </div>
-</div>
-<router-outlet></router-outlet>
+  </div>
+  <router-outlet></router-outlet>  
